@@ -4,9 +4,14 @@
         participant browser
         participant server
 
+        browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
+        activate server
+        server-->>browser: 302 URL-Redirect, Location: /notes
+        deactivate server
+
         browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
         activate server
-        server-->>browser: HTML document
+        server-->browser: 200 OK, HTML Document
         deactivate server
 
         browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
@@ -23,7 +28,7 @@
 
         browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
         activate server
-        server-->>browser: [{ "content": "HTML is easy", "date": "2023-1-1" }, ... ]
+        server-->>browser: [{ content: "note", date: "2026-07-01T17:01:23.953Z" }, ... ]
         deactivate server
 
         Note right of browser: The browser executes the callback function that renders the notes
